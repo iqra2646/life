@@ -1,25 +1,32 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
-const Navbar = () => {
+const Navbar = ({ isLoggedIn, handleLogout }) => {
   return (
-    <nav className="bg-blue-600 p-4">
-      <div className="container mx-auto flex justify-between items-center">
-        {/* Left Side: Brand/Logo */}
-        <div className="text-white text-2xl font-bold">
-          <Link to="/">Hospital Management</Link>
-        </div>
-
-        {/* Right Side: Links */}
-        <ul className="flex space-x-4 text-white">
-          <li><Link to="/" className="hover:text-gray-300">Home</Link></li>
-          <li><Link to="/services" className="hover:text-gray-300">Services</Link></li>
-          <li><Link to="/doctors" className="hover:text-gray-300">Doctors</Link></li>
-          <li><Link to="/appointment" className="hover:text-gray-300">Appointments</Link></li>
-        </ul>
+    <nav className="flex items-center justify-between p-4 bg-blue-500 text-white">
+      <div>
+        <NavLink to="/" className="text-2xl font-bold">
+          Hospital System
+        </NavLink>
+      </div>
+      <div className="space-x-4">
+        <NavLink to="/" className="hover:underline">Home</NavLink>
+        <NavLink to="/services" className="hover:underline">Services</NavLink>
+        <NavLink to="/doctors" className="hover:underline">Doctors</NavLink>
+        {isLoggedIn ? (
+          <>
+            <NavLink to="/appointment" className="hover:underline">Appointment</NavLink>
+            <button onClick={handleLogout} className="hover:underline">Logout</button>
+          </>
+        ) : (
+          <>
+            <NavLink to="/login" className="hover:underline">Login</NavLink>
+            <NavLink to="/signup" className="hover:underline">Sign Up</NavLink>
+          </>
+        )}
       </div>
     </nav>
   );
-}
+};
 
 export default Navbar;
