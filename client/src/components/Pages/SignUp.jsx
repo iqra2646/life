@@ -11,7 +11,7 @@ const SignUp = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch("http://127.0.0.1:5300/signup", {
+      const response = await fetch("http://127.0.0.1:5000/signup", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -49,7 +49,7 @@ const SignUp = () => {
           className="w-full p-2 border rounded"
         />
         {error && <p className="text-red-500 text-center">{error}</p>}
-        <button type="submit" className="w-full bg-blue-500 text-white py-2 rounded">
+        <button type="submit" className="w-full bg-green-500 text-white py-2 rounded">
           Sign Up
         </button>
       </form>

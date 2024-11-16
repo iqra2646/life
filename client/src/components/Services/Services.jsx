@@ -1,6 +1,6 @@
 import React from 'react';
 
-const specializedServices = [
+const Service = [
   {
     title: "Telemedicine",
     description: "Consult with our doctors remotely via video or chat.",
@@ -43,12 +43,12 @@ const specializedServices = [
   },
 ];
 
-const SpecializedServices = () => {
+const Services = () => {
   return (
-    <div className="p-8">
+    <div className="">
       <h2 className="text-4xl font-bold text-gray-800 mb-6">Our Specialized Services</h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-        {specializedServices.map((service, index) => (
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 ">
+        {Service.map((service, index) => (
           <div
             key={index}
             className="bg-white shadow-lg rounded-lg overflow-hidden transform transition duration-500 hover:scale-105 hover:shadow-2xl"
@@ -61,7 +61,7 @@ const SpecializedServices = () => {
             <div className="p-6">
               <h3 className="text-2xl font-semibold text-gray-800">{service.title}</h3>
               <p className="text-gray-600 mt-2">{service.description}</p>
-              <button className="mt-4 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-500">
+              <button className="mt-4 bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-gray-500">
                 Learn More
               </button>
             </div>
@@ -72,4 +72,4 @@ const SpecializedServices = () => {
   );
 };
 
-export default SpecializedServices;
+export default Services;

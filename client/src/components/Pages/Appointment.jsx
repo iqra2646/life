@@ -14,16 +14,34 @@ const Appointment = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Here you can add your logic to handle the form submission (e.g., send data to an API)
-    console.log('Appointment booked:', formData);
-    alert('Appointment booked successfully!');
-    setFormData({ name: '', email: '', phone: '', date: '', time: '' }); // Reset form
+    try {
+      const response = await fetch('http://127.0.0.1:5300/appointments', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        console.log('Appointment booked:', result);
+        alert('Appointment booked successfully!');
+        setFormData({ name: '', email: '', phone: '', date: '', time: '' }); // Reset form
+      } else {
+        const errorData = await response.json();
+        alert(`Error: ${errorData.error}`);
+      }
+    } catch (error) {
+      console.error('Error booking appointment:', error);
+      alert('Failed to book the appointment. Please try again.');
+    }
   };
 
   return (
-    <div className="p-6">
+    <div className="max-w-md mx-auto p-6">
       <h2 className="text-4xl font-bold text-gray-800 mb-6">Book an Appointment</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
@@ -103,7 +121,7 @@ const Appointment = () => {
 
         <button
           type="submit"
-          className="mt-4 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-500"
+          className="mt-4 bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-500"
         >
           Book Appointment
         </button>

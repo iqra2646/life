@@ -18,17 +18,6 @@ class User(db.Model):
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(120), nullable=False)
 
-class Doctor(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(100), nullable=False)
-    specialty = db.Column(db.String(100), nullable=False)
-
-class Appointment(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    doctor_id = db.Column(db.Integer, db.ForeignKey('doctor.id'), nullable=False)
-    appointment_date = db.Column(db.DateTime, nullable=False)
-
 # Helper functions
 def token_required(f):
     @wraps(f)
@@ -81,48 +70,8 @@ def login():
     )
     return jsonify({"token": token})
 
-@app.route('/doctors', methods=['GET'])
-@token_required
-def get_doctors(current_user):
-    doctors = Doctor.query.all()
-    doctors_data = [{"id": doc.id, "name": doc.name, "specialty": doc.specialty} for doc in doctors]
-    return jsonify({"doctors": doctors_data})
-
-@app.route('/appointments', methods=['POST'])
-@token_required
-def create_appointment(current_user):
-    data = request.get_json()
-    doctor_id = data.get('doctor_id')
-    appointment_date = data.get('appointment_date')
-
-    if not doctor_id or not appointment_date:
-        return jsonify({"error": "Doctor ID and appointment date are required"}), 400
-
-    new_appointment = Appointment(
-        user_id=current_user.id,
-        doctor_id=doctor_id,
-        appointment_date=datetime.datetime.strptime(appointment_date, '%Y-%m-%d %H:%M')
-    )
-    db.session.add(new_appointment)
-    db.session.commit()
-
-    return jsonify({"message": "Appointment created successfully"}), 201
-
-@app.route('/appointments', methods=['GET'])
-@token_required
-def get_appointments(current_user):
-    appointments = Appointment.query.filter_by(user_id=current_user.id).all()
-    appointments_data = [
-        {
-            "id": appt.id,
-            "doctor_id": appt.doctor_id,
-            "appointment_date": appt.appointment_date.strftime('%Y-%m-%d %H:%M')
-        } for appt in appointments
-    ]
-    return jsonify({"appointments": appointments_data})
-
 # Run the app
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()
-    app.run(debug=True, port=5300)
+    app.run(debug=True, port=5000)

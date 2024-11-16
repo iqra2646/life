@@ -9,6 +9,8 @@ import Departments from './components/Pages/Department';
 import SignUp from './components/Pages/SignUp';
 import Login from './components/Pages/Login';
 import AboutUs from './components/about/About';
+import Footer from './components/Navbar/Footer';
+import AdminDashboard from './components/about/Admin';
 
 function App() {
   // State to track login status
@@ -33,7 +35,7 @@ function App() {
         <Navbar isLoggedIn={!!token} handleLogout={handleLogout} />
 
         {/* Main content area */}
-        <div className="flex-1 flex flex-col p-6 overflow-auto">
+        <div className="flex-1 flex flex-col  overflow-auto">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/services" element={<Services />} />
@@ -43,9 +45,15 @@ function App() {
             <Route path="/login" element={<Login handleLogin={handleLogin} />} />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/department" element={<Departments />} />
+            <Route path="/admin" element={<AdminDashboard />} />          
+
+
           </Routes>
+          <Footer />
+
         </div>
       </div>
+
     </Router>
   );
 }
