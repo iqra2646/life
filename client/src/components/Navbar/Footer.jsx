@@ -31,7 +31,7 @@ const Footer = () => {
         <div>
           <h3 className="text-lg font-semibold mb-2">Contact Information</h3>
           <p className="text-sm">123 Health St, Wellness City, State, Zip</p>
-          <p className="text-sm">Phone: +1 (555) 123-4567</p>
+          <p className="text-sm">Phone: +25-46-14-73-13-99</p>
           <p className="text-sm">Email: info@ourhospital.com</p>
         </div>
 
